@@ -18,7 +18,7 @@ def main(företag):
             })
             soup = BeautifulSoup(page.text, 'html.parser')
             self.price = soup.find('fin-streamer', {'class': 'Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text
-            
+            return self.price
 
 
     def update(företag):
@@ -38,7 +38,7 @@ def main(företag):
                     isolerad = "".join(lista_utan_comma)
                 
                 sträng[index] = (float(isolerad))
-                
+        #print (sträng)      
         return sträng
 
 
@@ -64,8 +64,8 @@ def main(företag):
     return lista
     
 #simulation
-"""
-test = {"AMZN": 0, "TSLA":0, "AAPL":0, "ITECH.ST":0}
-for loop in range (5):
-    print(main(test))
-"""
+
+if __name__ == "__main__":
+    test = {"AMZN": 0, "TSLA":0, "AAPL":0, "ITECH.ST":0}
+    for loop in range (5):
+        print(main(test))

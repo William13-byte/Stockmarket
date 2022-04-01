@@ -22,8 +22,9 @@ def skapa_aktier():
     for loop in namn:
         företag1[loop] = 0
         lista_namn.append(loop)
+        
+    for loop in företag1:
         gammalt_v.append(0)
-    
      
     #print (gammalt_v)
 #stänga av programmet 
