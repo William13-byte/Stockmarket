@@ -1,4 +1,5 @@
 
+from re import S
 from bs4 import BeautifulSoup
 from time import sleep
 import requests
@@ -17,7 +18,7 @@ def main(företag):
             })
             soup = BeautifulSoup(page.text, 'html.parser')
             self.price = soup.find('fin-streamer', {'class': 'Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text
-            return self.price
+            
 
 
     def update(företag):
@@ -50,6 +51,7 @@ def main(företag):
             lista.append(företag[värde])
             lista = text_to_number(lista)
             företag[värde] = lista[index]
+            
             index+=1 
         return företag
         
@@ -63,7 +65,7 @@ def main(företag):
     
 #simulation
 """
-test = {"AMZN": 0, "TSLA":0}
+test = {"AMZN": 0, "TSLA":0, "AAPL":0, "ITECH.ST":0}
 for loop in range (5):
     print(main(test))
 """
