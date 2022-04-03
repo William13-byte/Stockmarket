@@ -17,7 +17,7 @@ def main(företag):
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
             })
             soup = BeautifulSoup(page.text, 'html.parser')
-            self.price = soup.find('fin-streamer', {'class': 'Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text
+            self.price = float(soup.find('fin-streamer', {'class': 'Fw(b) Fz(36px) Mb(-4px) D(ib)'}).text.replace(",", ""))
             return self.price
 
 
@@ -28,18 +28,7 @@ def main(företag):
             #print(i)
         return företag
 
-    def text_to_number(sträng):
-        for index in range(len(sträng)):
-            if type(sträng[index]) == str:
-                isolerad = sträng[index]
-                if isolerad.find(","):
-                    lista_utan_comma = isolerad.split(",")
-                    #print (temp)
-                    isolerad = "".join(lista_utan_comma)
-                
-                sträng[index] = (float(isolerad))
-        #print (sträng)      
-        return sträng
+
 
 
     def main(företag):
@@ -49,7 +38,6 @@ def main(företag):
         företag = update(företag)
         for värde in företag:
             lista.append(företag[värde])
-            lista = text_to_number(lista)
             företag[värde] = lista[index]
             
             index+=1 

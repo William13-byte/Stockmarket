@@ -20,10 +20,10 @@ def skapa_aktier():
     lista_namn = []
     
     for loop in namn:
-        företag1[loop] = 0
+        företag1[loop] = None
         lista_namn.append(loop)
         gammalt_v.append(0)
-     
+    #print (företag1)
     #print (gammalt_v)
 #stänga av programmet 
 def stäng():
@@ -35,6 +35,7 @@ def stäng():
 
 def på_start():
    global kör
+   konfimermation()
    kör = True
   
 
@@ -45,7 +46,7 @@ def på_stopp():
 def konfimermation():
     
     global namn, antal_entries, nyaAktier
-  
+
     for i in range(antal_entries):
         namn.append(skriv_rutor[i].get().upper())
     
@@ -58,9 +59,10 @@ def konfimermation():
 
 skriv_rutor = []
 def lägg_till():
+ 
     global y, antal_entries
 
-    if antal_entries <= 3:
+    if antal_entries < 3:
         skriv_ruta = Entry(win)
         skriv_ruta.grid(row=y, column=0, pady=5, padx=5)
         skriv_rutor.append(skriv_ruta)
@@ -72,7 +74,8 @@ def lägg_till():
 text_rutor =[]
 def lägg_till_text():
     global antal_text, y_värdetext
-    if antal_text <= 3:
+    
+    if antal_text < 3:
        text_ruta = Label(win)
        text_ruta.grid(row=y_värdetext, column=1, padx = 5, pady=5)
        text_rutor.append(text_ruta)
@@ -81,21 +84,22 @@ def lägg_till_text():
 
 def tabort():
     global antal_text, skriv_rutor, antal_entries
-    if len(företag) >= 1:
+    if len(företag) > 0:
         företag1.popitem()
         gammalt_v.pop(-1)
         företag.pop(-1)
         lista_namn.pop(-1)
         namn.pop(-1)
         
-    
-    text_rutor[-1].destroy()
-    text_rutor.pop(-1)
-    antal_entries-=1
-    skriv_rutor[-1].destroy()
-    skriv_rutor.pop(-1)
-    antal_text-=1 
-
+    try:
+        text_rutor[-1].destroy()
+        text_rutor.pop(-1)
+        antal_entries-=1
+        skriv_rutor[-1].destroy()
+        skriv_rutor.pop(-1)
+        antal_text-=1 
+    except IndexError:
+        pass 
 
 def print_text():
    global företag
@@ -103,7 +107,7 @@ def print_text():
    if kör:
         #själva programmet
         #print (företag1)
-        for värde in range (len(företag1)):
+        for värde in företag1:
             företag = mn(företag1)
         #    print (företag, 1 )
      
@@ -112,12 +116,6 @@ def print_text():
         #print (företag)
         #print (gammalt_v, "gammalt")
         for värde_f in range (len(namn)):
-            """
-            print (värde_f, "for, index ")
-            print (företag[värde_f], "företag")
-            print (gammalt_v[värde_f], "gammalt")
-            print(text_rutor[värde_f], "text_rutor")
-            """
             if företag[värde_f] > gammalt_v[värde_f]:
                 text_rutor[värde_f].configure (text=f": {företag[värde_f]}$ ↑ +{round(företag[värde_f] - gammalt_v[värde_f],2 )}", fg= "green")
                 
@@ -148,8 +146,7 @@ add_knapp.place(x=x_värde, y=190, anchor="center")
 delete_knapp = Button(win, text="Ta bort", command=tabort)
 delete_knapp.place(x = x_värde + 60, y=190, anchor="center")
 
-confirm = Button(win, text= "Confirm", command=konfimermation)
-confirm.place(x=x_värde, y=230, anchor="center")
+
 
 
 win.after(1000, print_text)
